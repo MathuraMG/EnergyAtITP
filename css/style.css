@@ -1,0 +1,25 @@
+html
+{
+  height:100%;
+}
+body
+{
+  background: #fff3e6;
+  height: 100%;
+}
+a
+{
+  font-family: sans-serif;
+}
+p
+{
+  font-family:  sans-serif;
+}
+div
+{
+  font-family:  sans-serif;
+}
+hr
+{
+  box-shadow: 1px 1px 10px #888888;
+}

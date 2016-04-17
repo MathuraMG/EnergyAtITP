@@ -1,0 +1,84 @@
+/* Style for heading for main page */
+
+.heading
+{
+  display: inline-block;
+  margin: auto;
+  width:100%;
+}
+.mainHeading
+{
+  font-size : 2em;
+  font-weight: 100;
+  text-align: center;
+}
+/* room styling */
+.room-category
+{
+  text-decoration: none;
+}
+
+.room
+{
+  display: block;
+  border: 4px solid #dddddd;
+  border-radius: 30px;
+  margin: 4% auto;
+  background-color: #ffffff;
+  width: 80%;
+  background-size: cover;
+  box-shadow: 2px 2px 20px #888888;
+  opacity:0.8;
+  height:150px;
+}
+.japanese-room
+{
+  /*height: 500px;*/
+  background-image: url('../assets/japanese.jpg');
+
+}
+.shop-room
+{
+  /*height: 200px;*/
+  background-image: url('../assets/shop.jpeg');
+
+}
+.kitchen-room
+{
+  /*height: 100px;*/
+  background-image: url('../assets/kitchen.jpeg');
+
+}
+.class-room
+{
+  /*height: 100px;*/
+  background-image: url('../assets/classroom.jpeg');
+
+}
+.phys-comp-room
+{
+  /*height: 400px;*/
+  background-image: url('../assets/pcomp.jpeg');
+}
+/*Name in the room*/
+.room-name
+{
+  display: inline-block;
+  font-size : 1.5em;
+  font-weight: 400;
+  color: #ffffff;
+  text-align: center;
+  width: 100%;
+  vertical-align:bottom;
+  line-height:150px;
+}
+
+/*Display only one section at a time*/
+section {
+  display: none;
+
+}
+
+#main-page-section {
+  display: block;
+}

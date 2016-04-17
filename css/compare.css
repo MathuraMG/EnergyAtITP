@@ -1,0 +1,95 @@
+/* Style for heading for main page */
+.heading
+{
+  display: inline-block;
+  margin: auto;
+  width:100%;
+}
+/*.mainHeading
+{
+  font-size : 2em;
+  font-weight: 100;
+  text-align: center;
+}*/
+/* room styling */
+.compare-main-image
+{
+  width:100%;
+  height:25%;
+  background-color: #fff3e6;
+  position:fixed;
+  top:0;
+  background-image: url('/assets/compare.jpg');
+  background-size: cover;
+  box-shadow: 2px 2px 20px #888888;
+}
+/*style the breaker*/
+.compare-line-breaker
+{
+  width: 90%;
+  height: 2px;
+  background-color: #888888;
+  border: none;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+/*Style the button*/
+.select-comparison-to-button-section
+{
+  width:100%;
+  height:250px;
+  background-color: #fff3e6;
+  position:fixed;
+  bottom:0;
+}
+.select-comparison-to-button
+{
+  text-align: center;
+  line-height: 250px;
+}
+.select-comparison-to-button-text
+{
+  display: inline;
+  padding: 30px 30px;
+  font-size : 3em;
+  font-weight: 100;
+  color: #ffffff;
+  text-align: center;
+  background-color: #737373;
+  border-radius: 20px;
+  box-shadow: 2px 2px 20px #888888;
+  text-decoration: none;
+}
+/*Information about the device*/
+.compare-name
+{
+  font-size: 2.5em;
+  font-weight: 700;
+}
+.compare-details
+{
+  font-size: 2.5em;
+  font-weight: 100;
+}
+.compare-text-details
+{
+  width:60%;
+  float:left;
+}
+.compare-section
+{
+  width:86%;
+  margin-left: 7%;
+  margin-right:7%;
+}
+.compare-image
+{
+  float:right;
+  width:40%;
+  text-align:right;
+}
+.compare-image-icon
+{
+  height: 200px;
+  width: 200px;
+}
