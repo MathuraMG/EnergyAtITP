@@ -17,7 +17,8 @@
  * under the License.
  */
 
-var serverUrl = 'http://itpenertivserver.herokuapp.com/';
+//var serverUrl = 'http://itpenertivserver.herokuapp.com/';
+var serverUrl = 'http://localhost:5000/';
 
 var app = {
     // Application Constructor
@@ -128,8 +129,9 @@ function makeAjaxCall(urlPath, sectionClass)
     success: function(result){
       console.log(result);
       data = result;
+      deleteContent();
       createContent(result,sectionClass);
-      
+
     }
   });
   return(data);

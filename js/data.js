@@ -1,3 +1,9 @@
+function deleteContent()
+{
+  $('.visualisation-pie').empty();
+  $('.visualisation').empty();
+}
+
 function createContent(result,sectionClass)
 {
   var selectClass = '';
@@ -29,7 +35,7 @@ function createContent(result,sectionClass)
   // $(visDiv).append(visSvg);
 
   drawGraph(result,sectionClass);
-  drawPieCharts(result);
+  drawPieCharts(result,sectionClass);
 
 
   //drawPieCharts(result);
@@ -38,7 +44,10 @@ function createContent(result,sectionClass)
 
 function pickMaxUsage(result)
 {
-  return 'potato';
+  for(var i =0;i<result.length;i++){
+
+  }
+  return '';
 }
 
 function drawGraph(allLineData,sectionClass)
@@ -55,7 +64,7 @@ function drawGraph(allLineData,sectionClass)
 
   var vis = d3.select(elementSelect),
       WIDTH = 2000,
-      HEIGHT = 200,
+      HEIGHT = 120,
       MARGINS = {
         top: 20,
         right: 20,
@@ -134,7 +143,7 @@ function drawGraph(allLineData,sectionClass)
 
 }
 
-function drawPieCharts(energyData)
+function drawPieCharts(energyData,sectionClass)
 {
   var totalEnergyOffPeakData = [];
   var totalEnergyPeakData = [];
@@ -142,9 +151,9 @@ function drawPieCharts(energyData)
   var totalEnergyOffPeakDataWatt = 0;
   var totalEnergyPeakDataWatt = 0;
 
-  var width = 500;
-  var height = 500;
-  var radius = 250;
+  var width = 0.6*screen.width;
+  var height = 0.6*screen.width;;
+  var radius = 0.3*screen.width;;
 
 
   /****************************************************************
@@ -153,6 +162,9 @@ function drawPieCharts(energyData)
   for(var i =0;i<energyData.length;i++)
   {
     if(energyData[i].name.localeCompare("x") == 0){
+      console.log('garbegeish');
+    }
+    else if(energyData[i].name.localeCompare("roomTotal") == 0){
       console.log('garbegeish');
     }
     else
@@ -164,7 +176,7 @@ function drawPieCharts(energyData)
     totalEnergyOffPeakData.push(
       {"label":energyData[i].name,
       "value":energyData[i].totalEnergyOffPeak});
-
+      console.log(totalEnergyPeakData);
     totalEnergyOffPeakDataWatt += energyData[i].totalEnergyOffPeak;
     totalEnergyPeakDataWatt += energyData[i].totalEnergyPeak;
     }
@@ -193,7 +205,7 @@ function getPieChart(data,width,height,radius,id,xOffset,yOffset)
   arcs.append("svg:path")
       .attr("fill", function(d, i){
         console.log('the color is -- ' + i)
-          return d3.hsl(360-i*30, 0.4,0.65);
+          return d3.hsl((360-i*10)%40, 0.4,0.65);
       })
       .attr("d", function (d) {
           // log the result of the arc generator to show how cool it is :)
