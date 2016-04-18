@@ -1,62 +1,44 @@
-function writeIndNumbers(allLineData)
+function createContent(result,sectionClass)
 {
-  var section = document.getElementsByClassName('perEquipmentNumber')[0];
+  var selectClass = '';
+  selectClass = '.' + sectionClass + ' .device-content .visHeading';
+  $(selectClass).html('Power usage over last 24 hours');
 
-  for(var i=0;i<allLineData.length;i++)
-  {
-    if(allLineData[i].name.localeCompare("x") == 0){
-      console.log('garbegeish');
-    }
-    else if(allLineData[i].name.localeCompare("Outlet") == 0){
-      console.log('garbegeish');
-    }
-    else if(allLineData[i].name.localeCompare("Laser Cutter") == 0){
-      console.log('garbegeish');
-    }
-    else if(allLineData[i].name.localeCompare("Emergency Power Switch") == 0){
-      console.log('garbegeish');
-    }
-    else
-    {
-      var totalEnergykWh = allLineData[i].totalEnergyOffPeak + allLineData[i].totalEnergyPeak;
-      var className = 'class-'+allLineData[i].name;
-      className = className.replace(/\s+/g, '');
+  selectClass = '.' + sectionClass + ' .device-content .peak-usage';
+  $(selectClass).html('Usage - peak vs off-peak hours');
 
-      var dataDiv = document.createElement('div');
-      dataDiv.classList.add('equipmentDetails');
-      dataDiv.classList.add(className);
+  var equipName = pickMaxUsage(result);
+  selectClass = '.' + sectionClass + ' .device-content .equipment-max-usage';
+  $(selectClass).html('Equipment consuming maximum energy');
 
-      section.appendChild(dataDiv);
-
-      var equipName = document.createElement('div');
-      equipName.classList.add('equipmentName');
-      equipName.innerHTML = allLineData[i].name;
-
-      var equipEnergy = document.createElement('div');
-      equipEnergy.classList.add('equipmentEnergy');
-      equipEnergy.innerHTML = Math.round(totalEnergykWh/4000,2) + 'kWh';
-
-      var equipEnergyPeak = document.createElement('div');
-      equipEnergyPeak.classList.add('equipmentEnergy');
-      equipEnergyPeak.innerHTML = Math.round(allLineData[i].totalEnergyPeak/4000,2) + 'kWh';
-
-      var equipEnergyOffPeak = document.createElement('div');
-      equipEnergyOffPeak.classList.add('equipmentEnergy');
-      equipEnergyOffPeak.innerHTML = Math.round(allLineData[i].totalEnergyOffPeak/4000,2) + 'kWh';
-
-      var InstPower = document.createElement('div');
-      InstPower.classList.add('equipmentEnergy');
-      InstPower.innerHTML = Math.round(totalEnergykWh/(24*7*4),2) + 'W';
-
-      dataDiv.appendChild(equipName);
-      dataDiv.appendChild(equipEnergy);
-      dataDiv.appendChild(equipEnergyPeak);
-      dataDiv.appendChild(equipEnergyOffPeak);
-      dataDiv.appendChild(InstPower);
-    }
+  selectClass = '.' + sectionClass + ' .device-content .equipment-max-usage-name';
+  $(selectClass).html(equipName);
 
 
-  }
+
+  // var lineDiv = $('<hr>');
+  // lineDiv.addClass('lineDiv');
+  // $(selectClass).append(lineDiv);
+
+  // var visDiv = $('<div>');
+  // visDiv.addClass('visDiv');
+  // $(selectClass).append(visDiv);
+  //
+  // var visSvg = $('<svg>');
+  // visSvg.addClass('visualisation');
+  // $(visDiv).append(visSvg);
+
+  drawGraph(result,sectionClass);
+  drawPieCharts(result);
+
+
+  //drawPieCharts(result);
+
+}
+
+function pickMaxUsage(result)
+{
+  return 'potato';
 }
 
 function drawGraph(allLineData,sectionClass)
@@ -65,11 +47,15 @@ function drawGraph(allLineData,sectionClass)
   var fullRoomIndex = allLineData.length - 1;
 
   var elementSelect = '.' + sectionClass + ' .visualisation';
-  console.log(elementSelect)
+
+  console.log('potatoooo -- ');
+  console.log(elementSelect);
+
+  console.log($(elementSelect));
 
   var vis = d3.select(elementSelect),
       WIDTH = 2000,
-      HEIGHT = 400,
+      HEIGHT = 200,
       MARGINS = {
         top: 20,
         right: 20,
@@ -84,22 +70,22 @@ function drawGraph(allLineData,sectionClass)
                                                           return d.y; })]),
       xAxis = d3.svg.axis()
         .scale(xRange)
-        .tickSize(2)
+        .tickSize(0.5)
         .ticks(24)
         //.tickValues(["3 Feb","4 Feb","5 Feb","6 Feb","7 Feb","8 Feb","9 Feb"]);
       y1Axis = d3.svg.axis()
         .scale(yRange)
-        .tickSize(2)
+        .tickSize(0.5)
         .orient('left')
         .tickSubdivide(true);
 
   vis.append('svg:g')
-    .attr('class', 'x-axis')
+    .attr('class', 'axis')
     .attr('transform', 'translate(0,' + (HEIGHT - MARGINS.bottom) + ')')
     .call(xAxis);
 
   vis.append('svg:g')
-    .attr('class', 'y-axis')
+    .attr('class', 'axis')
     .attr('transform', 'translate(' + (MARGINS.left) + ',0)')
     .call(y1Axis);
   var i =1;
@@ -120,17 +106,11 @@ function drawGraph(allLineData,sectionClass)
 
     var allIndexDiv = document.getElementsByClassName('allIndexButtons')[0];
 
-
-
-      //console.log(allLineData[i].value);
-
-
-
     console.log(allLineData[fullRoomIndex]);
     console.log('drawing graph for -- ' + allLineData[fullRoomIndex].name );
     var className = 'class-'+allLineData[fullRoomIndex].name;
     className = className.replace(/\s+/g, '');
-    var color = d3.hsl(240, 0.4,0.65);
+    var color = d3.hsl(20, 0.4,0.65);
     var classNamePath = className + ' graphPath';
 
 
@@ -154,34 +134,6 @@ function drawGraph(allLineData,sectionClass)
 
 }
 
-function indexContent(text,className,allIndexDiv,color)
-{
-  console.log('drawing button for -- ' + text);
-
-  var a = document.createElement('button');
-  a.innerHTML = text ;
-  a.classList.add('indexElements');
-  allIndexDiv.appendChild(a);
-  a.style.background = color;
-  a.onclick = function(){
-    var line = document.getElementsByClassName(className);
-    for(var i=0;i<line.length;i++){
-      if(line[i].style.display.localeCompare('none') == 0)
-      {
-        line[i].style.display = 'block';
-        a.style.background = color;
-      }
-      else
-      {
-        line[i].style.display = 'none';
-        a.style.background = '#aaaaaa';
-      }
-    }
-
-
-  }
-}
-
 function drawPieCharts(energyData)
 {
   var totalEnergyOffPeakData = [];
@@ -190,9 +142,9 @@ function drawPieCharts(energyData)
   var totalEnergyOffPeakDataWatt = 0;
   var totalEnergyPeakDataWatt = 0;
 
-  var width = 0.3*screen.width;
-  var height = 0.3*screen.width;
-  var radius = 0.15*screen.width;
+  var width = 500;
+  var height = 500;
+  var radius = 250;
 
 
   /****************************************************************
@@ -203,17 +155,9 @@ function drawPieCharts(energyData)
     if(energyData[i].name.localeCompare("x") == 0){
       console.log('garbegeish');
     }
-    else if(energyData[i].name.localeCompare("Outlet") == 0){
-      console.log('garbegeish');
-    }
-    else if(energyData[i].name.localeCompare("Laser Cutter") == 0){
-      console.log('garbegeish');
-    }
-    else if(energyData[i].name.localeCompare("Emergency Power Switch") == 0){
-      console.log('garbegeish');
-    }
     else
     {
+      console.log('pushing data');
     totalEnergyPeakData.push(
       {"label":energyData[i].name,
       "value":energyData[i].totalEnergyPeak});
@@ -227,17 +171,15 @@ function drawPieCharts(energyData)
   }
 
   var ratio = totalEnergyOffPeakDataWatt/totalEnergyPeakDataWatt;
+  var elementSelect = '.' + sectionClass + ' .visualisation-pie';
+  // $(elementSelect).html( Math.round(totalEnergyPeakDataWatt/4000,2) + 'kWh');
 
-  $('#numbersPeakData').html( Math.round(totalEnergyPeakDataWatt/4000,2) + 'kWh');
-  $('#numbersOffPeakData').html( Math.round(totalEnergyOffPeakDataWatt/4000,2) + 'kWh');
-  var noOfBulbs = Math.round(((totalEnergyOffPeakDataWatt+totalEnergyPeakDataWatt)/4000)/energyBulbInOneWeek,0);
-  $('#noOfBulbs').html( 'Energy usage in the shop is same as leaving '+ noOfBulbs +' bulbs on all day and night for a week ');
+  console.log('going to get pie chart');
+  getPieChart(totalEnergyPeakData, width, height,radius,elementSelect,0,0);
 
-  drawLightBulbs(noOfBulbs);
-  getPieChart(totalEnergyPeakData, width, height,radius,'#chartPeakData',0,0);
-  getPieChart(totalEnergyOffPeakData, width, height,radius*ratio,'#chartOffPeakData',width/2,height/2);
-
+  // getPieChart(totalEnergyOffPeakData, width, height,radius*ratio,'#chartOffPeakData',width/2,height/2);
 }
+
 function getPieChart(data,width,height,radius,id,xOffset,yOffset)
 {
   var vis = d3.select(id).append("svg:svg").data([data]).attr("width", width).attr("height", height).append("svg:g").attr("transform", "translate(" +(radius+xOffset ) + "," + (radius+yOffset) + ")");
@@ -255,7 +197,7 @@ function getPieChart(data,width,height,radius,id,xOffset,yOffset)
       })
       .attr("d", function (d) {
           // log the result of the arc generator to show how cool it is :)
-          console.log(arc(d));
+          //console.log(arc(d));
           return arc(d);
       });
 

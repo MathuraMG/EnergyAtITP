@@ -128,7 +128,8 @@ function makeAjaxCall(urlPath, sectionClass)
     success: function(result){
       console.log(result);
       data = result;
-      drawGraph(result,sectionClass);
+      createContent(result,sectionClass);
+      
     }
   });
   return(data);

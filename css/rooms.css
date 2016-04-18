@@ -5,9 +5,10 @@
   background-color: #ffffff;
   width: 100%;
   background-size: cover;
-  box-shadow: 2px 2px 20px #888888;
+  /*box-shadow: 2px 2px 20px #888888;*/
   height:120px;
   top: 0;
+  background: center;
 }
 .japanese-room-page-image
 {
@@ -95,14 +96,57 @@
   /*margin-top: 50%;*/
 }
 
+/*VUSUALISATION*/
 
-/* FOR THE VIZ */
-svg
-{
-  height: 60%;
-  width: 70%;
+.visDiv {
+  display: block;
+  overflow-x:scroll;
+  overflow-y:hidden;
+  width: 80%;
+  height: 220px;
   margin: 10px auto;
-  overflow-x: visible;
-   position: absolute;
+}
+.visualisation {
+  display: inline-block;
+  width: 2000px;
+  height: 220px;
+  vertical-align: top;
+  font-size: 0.5em;
+}
+.axis {
+  stroke-width: 100px;
+}
 
+::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 7px;
+    background-color: rgba(0,0,0,.09);
+    background-image: url('../assets/linegraphai.png');
+    background-size:1000px 20px;
+    background-repeat: repeat;
+    opacity: 0.1;
+}
+::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: rgba(0,0,0,.3);
+    -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
+}
+
+.visHeading, .peak-usage, .equipment-max-usage, .equipment-max-usage-name {
+  font-size : 1sem;
+  font-weight: 100;
+  text-align: center;
+  width: 80%;
+  margin: 0 auto;
+}
+
+.energyIcon {
+  width: 15%;
+  display: block;
+  margin: 0 auto;
+}
+
+.line-div {
+  width: 80%;
+  box-shadow: none;
 }
