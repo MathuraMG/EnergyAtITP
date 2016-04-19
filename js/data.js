@@ -73,7 +73,10 @@ function drawGraph(allLineData,sectionClass)
         bottom: 20,
         left: 40
       },
-      xRange = d3.scale.linear().range([MARGINS.left, WIDTH - MARGINS.right]).domain([0,24*60]),
+      xRange = d3.scale.linear().range([MARGINS.left, WIDTH - MARGINS.right])  .domain([d3.min(allLineData[fullRoomIndex].value,function(d){
+        return d.x; }),
+        d3.max(allLineData[fullRoomIndex].value,function(d){
+        return d.x; })]),
       yRange = d3.scale.linear()
               .range([HEIGHT - MARGINS.top, MARGINS.bottom])
               .domain([0,d3.max(allLineData[fullRoomIndex].value,function(d){
@@ -83,6 +86,7 @@ function drawGraph(allLineData,sectionClass)
         .scale(xRange)
         .tickSize(0.5)
         .ticks(24)
+        // .tickFormat(d3.time.format("%d"))
         //.tickValues(["3 Feb","4 Feb","5 Feb","6 Feb","7 Feb","8 Feb","9 Feb"]);
       y1Axis = d3.svg.axis()
         .scale(yRange)
@@ -185,11 +189,18 @@ function drawPieCharts(energyData,sectionClass)
   }
 
   var ratio = totalEnergyOffPeakDataWatt/totalEnergyPeakDataWatt;
-  var elementSelect = '.' + sectionClass + ' .visualisation-pie';
+  ratio = Math.sqrt(ratio);
+  var elementSelect = '.' + sectionClass + ' .visualisation-pie.visualisation-pie-peak';
+
   // $(elementSelect).html( Math.round(totalEnergyPeakDataWatt/4000,2) + 'kWh');
 
   console.log('going to get pie chart');
   getPieChart(totalEnergyPeakData, width, height,radius,elementSelect,0,0);
+
+  var elementSelect = '.' + sectionClass + ' .visualisation-pie.visualisation-pie-off-peak';
+
+  console.log('going to get pie chart');
+  getPieChart(totalEnergyOffPeakData, width, height,radius*ratio,elementSelect,0,0);
 
   // getPieChart(totalEnergyOffPeakData, width, height,radius*ratio,'#chartOffPeakData',width/2,height/2);
 }

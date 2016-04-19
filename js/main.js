@@ -71,6 +71,21 @@ function onLoad(){
   });
 
 
+  //attach on swipe functions for the pie charts
+  $('.visualisation-pie-peak').on("swiperight", function() {
+    //fade in and out the icons indicating which pie chart is showing
+    $('#sun-selection-icon').css('opacity',0.7);
+    $('#moon-selection-icon').css('opacity',1);
+    $('.visualisation-pie-peak').css('display','none');
+    $('.visualisation-pie-off-peak').css('display','block');
+  });
+  $('.visualisation-pie-off-peak').on("swipeleft", function() {
+    //fade in and out the icons indicating which pie chart is showing
+    $("#sun-selection-icon").css('opacity',1);
+    $("#moon-selection-icon").css('opacity',0.7);
+    $('.visualisation-pie-peak').css('display','block');
+    $('.visualisation-pie-off-peak').css('display','none');
+  });
 
 }
 

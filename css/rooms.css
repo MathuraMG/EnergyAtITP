@@ -164,6 +164,9 @@ MAX EQUIP USAGE
 /*******************************
 PEAK VS OFF PEAK
 *******************************/
+.pie-charts-container {
+  width: 100%;
+}
 .visualisation-pie {
   display: block;
   width: 60%;
@@ -172,7 +175,9 @@ PEAK VS OFF PEAK
   margin: 0 auto;
   font-size: 0.5em;
 }
-
+.visualisation-pie-off-peak {
+  display: none;
+}
 
 /********************************
 SELECTION ICONS
@@ -180,11 +185,14 @@ SELECTION ICONS
 .selection-icons
 {
   width: 8%;
-  opacity: 0.7;
 }
 #sun-selection-icon
 {
   opacity: 1;
+}
+#moon-selection-icon
+{
+  opacity: 0.7;
 }
 .peak-selection-icons
 {
