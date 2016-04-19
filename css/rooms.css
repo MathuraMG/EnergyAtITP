@@ -186,11 +186,11 @@ SELECTION ICONS
 {
   width: 8%;
 }
-#sun-selection-icon
+.sun-selection-icon
 {
   opacity: 1;
 }
-#moon-selection-icon
+.moon-selection-icon
 {
   opacity: 0.7;
 }
