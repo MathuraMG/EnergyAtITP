@@ -42,7 +42,7 @@ body
   background-size: cover;
   /*box-shadow: 2px 2px 20px #888888;*/
   opacity:0.8;
-  height:150px;
+  height:120px;
 }
 .japanese-room
 {
@@ -83,7 +83,7 @@ body
   text-align: center;
   width: 100%;
   vertical-align:bottom;
-  line-height:150px;
+  line-height:120px;
 }
 
 /*Display only one section at a time*/

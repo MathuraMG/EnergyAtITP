@@ -108,7 +108,7 @@
 }
 .visualisation {
   display: inline-block;
-  width: 2000px;
+  width: 1000px;
   height: 120px;
   vertical-align: top;
   font-size: 0.5em;
@@ -132,14 +132,23 @@
     -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
 }
 
+/*******************************
+MAX EQUIP USAGE
+*******************************/
+
 .visHeading, .peak-usage, .equipment-max-usage, .equipment-max-usage-name {
-  font-size : 1sem;
+  font-size : 1em;
   font-weight: 100;
   text-align: center;
   width: 80%;
   margin: 0 auto;
 }
 
+.equipment-max-usage-name {
+  margin: 15px auto;
+  font-weight: 400;
+  font-size: 1.2em;
+}
 .energyIcon {
   width: 15%;
   display: block;
@@ -152,6 +161,9 @@
   margin: 5% auto;
 }
 
+/*******************************
+PEAK VS OFF PEAK
+*******************************/
 .visualisation-pie {
   display: block;
   width: 60%;
@@ -159,5 +171,24 @@
   vertical-align: middle;
   margin: 0 auto;
   font-size: 0.5em;
-  padding-top: 10%;
+}
+
+
+/********************************
+SELECTION ICONS
+********************************/
+.selection-icons
+{
+  width: 8%;
+  opacity: 0.7;
+}
+#sun-selection-icon
+{
+  opacity: 1;
+}
+.peak-selection-icons
+{
+  width: 80%;
+  margin: 15px auto;
+  text-align: center;
 }

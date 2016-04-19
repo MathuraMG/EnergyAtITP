@@ -30,7 +30,11 @@
     <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
 
     <!-- This is a wide open CSP declaration. To lock this down for production, see below. -->
-    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" />
+    <!-- <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" /> -->
+
+
+    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; media-src *" />
+
     <!-- Good default declaration:
     * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
     * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
@@ -48,7 +52,7 @@
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/rooms.css">
 
-    <link href='http://fonts.googleapis.com/css?family=Raleway:700,400,100' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Raleway:700,400,100' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.css" />
     <title>Hello World</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
@@ -56,6 +60,7 @@
     <script src="http://cdnjs.cloudflare.com/ajax/libs/d3/2.10.0/d3.v2.min.js "></script>
 
     <script type="text/javascript" src="js/data.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
 </head>
 
@@ -63,7 +68,7 @@
   <section class="main-page-section" id="main-page-section">
     <div class="app">
       <div class = "heading">
-        <h2 class="mainHeading"> ITP Rooms </h2>
+        <h2 class="mainHeading"> Energy @ ITP </h2>
       </div>
 
       <div class="room class-room">
@@ -108,12 +113,18 @@
         <hr class="line-div"></hr>
 
         <div class="equipment-max-usage"></div>
-        <img class="energyIcon" src="assets/energyIcon.png"></img>
+        <!-- <img class="energyIcon" src="assets/energyIcon.png"></img> -->
         <div class="equipment-max-usage-name"></div>
 
 
         <hr class="line-div"></hr>
         <div class="peak-usage"></div>
+
+        <div class="peak-selection-icons">
+          <img class="selection-icons" id="sun-selection-icon" src="assets/sun.png"></img>
+          <img class="selection-icons" id="moon-selection-icon" src="assets/moon.png"></img>
+
+        </div>
         <div class="visualisation-pie">
         </div>
 
@@ -138,12 +149,18 @@
         <hr class="line-div"></hr>
 
         <div class="equipment-max-usage"></div>
-        <img class="energyIcon" src="assets/energyIcon.png"></img>
+        <!-- <img class="energyIcon" src="assets/energyIcon.png"></img> -->
         <div class="equipment-max-usage-name"></div>
 
 
         <hr class="line-div"></hr>
         <div class="peak-usage"></div>
+
+        <div class="peak-selection-icons">
+          <img class="selection-icons" id="sun-selection-icon" src="assets/sun.png"></img>
+          <img class="selection-icons" id="moon-selection-icon" src="assets/moon.png"></img>
+
+        </div>
         <div class="visualisation-pie">
         </div>
 
@@ -167,12 +184,18 @@
         <hr class="line-div"></hr>
 
         <div class="equipment-max-usage"></div>
-        <img class="energyIcon" src="assets/energyIcon.png"></img>
+        <!-- <img class="energyIcon" src="assets/energyIcon.png"></img> -->
         <div class="equipment-max-usage-name"></div>
 
 
         <hr class="line-div"></hr>
         <div class="peak-usage"></div>
+
+        <div class="peak-selection-icons">
+          <img class="selection-icons" id="sun-selection-icon" src="assets/sun.png"></img>
+          <img class="selection-icons" id="moon-selection-icon" src="assets/moon.png"></img>
+
+        </div>
         <div class="visualisation-pie">
         </div>
 
@@ -195,12 +218,18 @@
         <hr class="line-div"></hr>
 
         <div class="equipment-max-usage"></div>
-        <img class="energyIcon" src="assets/energyIcon.png"></img>
+        <!-- <img class="energyIcon" src="assets/energyIcon.png"></img> -->
         <div class="equipment-max-usage-name"></div>
 
 
         <hr class="line-div"></hr>
         <div class="peak-usage"></div>
+
+        <div class="peak-selection-icons">
+          <img class="selection-icons" id="sun-selection-icon" src="assets/sun.png"></img>
+          <img class="selection-icons" id="moon-selection-icon" src="assets/moon.png"></img>
+
+        </div>
         <div class="visualisation-pie">
         </div>
 

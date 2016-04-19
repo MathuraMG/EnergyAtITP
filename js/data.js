@@ -13,41 +13,43 @@ function createContent(result,sectionClass)
   selectClass = '.' + sectionClass + ' .device-content .peak-usage';
   $(selectClass).html('Usage - peak vs off-peak hours');
 
-  var equipName = pickMaxUsage(result);
+  var equipDetails = pickMaxUsage(result);
+  var equipName = equipDetails.name;
   selectClass = '.' + sectionClass + ' .device-content .equipment-max-usage';
   $(selectClass).html('Equipment consuming maximum energy');
 
   selectClass = '.' + sectionClass + ' .device-content .equipment-max-usage-name';
   $(selectClass).html(equipName);
 
-
-
-  // var lineDiv = $('<hr>');
-  // lineDiv.addClass('lineDiv');
-  // $(selectClass).append(lineDiv);
-
-  // var visDiv = $('<div>');
-  // visDiv.addClass('visDiv');
-  // $(selectClass).append(visDiv);
-  //
-  // var visSvg = $('<svg>');
-  // visSvg.addClass('visualisation');
-  // $(visDiv).append(visSvg);
-
   drawGraph(result,sectionClass);
   drawPieCharts(result,sectionClass);
-
-
-  //drawPieCharts(result);
 
 }
 
 function pickMaxUsage(result)
 {
-  for(var i =0;i<result.length;i++){
+  console.log('test test test');
+  console.log(result);
+  var maxEquipmentName = result[0].name;
+  var maxEquipmentValue = result[0].totalEnergyPeak + result[0].totalEnergyOffPeak;
+  var totalRoomValue = maxEquipmentValue;
 
+  //get the name of the equipoment which used maximum energy
+  for(var i =1;i<result.length;i++){
+    var totalValue = result[i].totalEnergyPeak + result[i].totalEnergyOffPeak;
+    if(totalValue > maxEquipmentValue)
+    {
+      maxEquipmentValue = totalValue;
+      maxEquipmentName = result[i].name;
+    }
+    totalRoomValue += totalValue;
   }
-  return '';
+  var percentage = (100*maxEquipmentValue)/totalRoomValue;
+  return {
+    'name': maxEquipmentName,
+    'value' : maxEquipmentValue,
+    'percentage': percentage
+  };
 }
 
 function drawGraph(allLineData,sectionClass)
@@ -63,7 +65,7 @@ function drawGraph(allLineData,sectionClass)
   console.log($(elementSelect));
 
   var vis = d3.select(elementSelect),
-      WIDTH = 2000,
+      WIDTH = 1000,
       HEIGHT = 120,
       MARGINS = {
         top: 20,
