@@ -104,8 +104,15 @@ function drawGraph(allLineData,sectionClass,isDay, range)
   var i =1;
   var scale = (1000/1440);
 
-
-  vis.append("rect").attr("x", range[0]*scale).attr("y", 20).attr("width",  (range[1]-range[0])*scale).attr("class","line-chart-off-peak");
+  if(isDay ==1)
+  {
+    vis.append("rect").attr("x", range[0]*scale).attr("y", 20).attr("width",  (range[1]-range[0])*scale).attr("class","line-chart-off-peak");
+  }
+  else
+  {
+    vis.append("rect").attr("x", 0*scale+40).attr("y", 20).attr("width",  (range[0])*scale).attr("class","line-chart-off-peak");
+    vis.append("rect").attr("x", (range[1])*scale).attr("y", 20).attr("width",  (1440-range[1])*scale-20).attr("class","line-chart-off-peak");
+  }
 
   var totalData = [];
 
