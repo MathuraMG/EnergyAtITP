@@ -4,7 +4,7 @@ function deleteContent()
   $('.visualisation').empty();
 }
 
-function createContent(result,sectionClass)
+function createContent(result,sectionClass, isDay, range)
 {
   var selectClass = '';
   selectClass = '.' + sectionClass + ' .device-content .visHeading';
@@ -21,7 +21,7 @@ function createContent(result,sectionClass)
   selectClass = '.' + sectionClass + ' .device-content .equipment-max-usage-name';
   $(selectClass).html(equipName);
 
-  drawGraph(result,sectionClass);
+  drawGraph(result,sectionClass,isDay, range);
   drawPieCharts(result,sectionClass);
 
 }
@@ -52,18 +52,14 @@ function pickMaxUsage(result)
   };
 }
 
-function drawGraph(allLineData,sectionClass)
+function drawGraph(allLineData,sectionClass,isDay, range)
 {
 
   var fullRoomIndex = allLineData.length - 1;
+  console.log(allLineData);
 
   var elementSelect = '.' + sectionClass + ' .visualisation';
-
-  console.log('potatoooo -- ');
-  console.log(elementSelect);
-
-  console.log($(elementSelect));
-
+  var timeFormat = d3.time.format("%I");
   var vis = d3.select(elementSelect),
       WIDTH = 1000,
       HEIGHT = 120,
@@ -86,7 +82,8 @@ function drawGraph(allLineData,sectionClass)
         .scale(xRange)
         .tickSize(0.5)
         .ticks(24)
-        // .tickFormat(d3.time.format("%d"))
+        //.tickFormat(d3.time.format("%d"))
+        //.tickFormat(d3.time.format("%d"))
         //.tickValues(["3 Feb","4 Feb","5 Feb","6 Feb","7 Feb","8 Feb","9 Feb"]);
       y1Axis = d3.svg.axis()
         .scale(yRange)
@@ -97,6 +94,7 @@ function drawGraph(allLineData,sectionClass)
   vis.append('svg:g')
     .attr('class', 'axis')
     .attr('transform', 'translate(0,' + (HEIGHT - MARGINS.bottom) + ')')
+    .style("position", "fixed")
     .call(xAxis);
 
   vis.append('svg:g')
@@ -104,8 +102,10 @@ function drawGraph(allLineData,sectionClass)
     .attr('transform', 'translate(' + (MARGINS.left) + ',0)')
     .call(y1Axis);
   var i =1;
-  var scale = ((0.7*screen.width-60)/168);
-  //vis.append("rect").attr("x", scale*24*i).attr("y", 20).attr("width",  scale*10).attr("fill","#888888").attr("height", 460);
+  var scale = (1000/1440);
+
+
+  vis.append("rect").attr("x", range[0]*scale).attr("y", 20).attr("width",  (range[1]-range[0])*scale).attr("class","line-chart-off-peak");
 
   var totalData = [];
 
@@ -175,14 +175,12 @@ function drawPieCharts(energyData,sectionClass)
     }
     else
     {
-      console.log('pushing data');
     totalEnergyPeakData.push(
       {"label":energyData[i].name,
       "value":energyData[i].totalEnergyPeak});
     totalEnergyOffPeakData.push(
       {"label":energyData[i].name,
       "value":energyData[i].totalEnergyOffPeak});
-      console.log(totalEnergyPeakData);
     totalEnergyOffPeakDataWatt += energyData[i].totalEnergyOffPeak;
     totalEnergyPeakDataWatt += energyData[i].totalEnergyPeak;
     }
@@ -200,14 +198,20 @@ function drawPieCharts(energyData,sectionClass)
   var elementSelect = '.' + sectionClass + ' .visualisation-pie.visualisation-pie-off-peak';
 
   console.log('going to get pie chart');
-  getPieChart(totalEnergyOffPeakData, width, height,radius*ratio,elementSelect,0,0);
+  getPieChart(totalEnergyOffPeakData, width*ratio, height*ratio,radius*ratio,elementSelect,0,0);
 
   // getPieChart(totalEnergyOffPeakData, width, height,radius*ratio,'#chartOffPeakData',width/2,height/2);
 }
 
 function getPieChart(data,width,height,radius,id,xOffset,yOffset)
 {
-  var vis = d3.select(id).append("svg:svg").data([data]).attr("width", width).attr("height", height).append("svg:g").attr("transform", "translate(" +(radius+xOffset ) + "," + (radius+yOffset) + ")");
+  var vis = d3.select(id).append("svg:svg")
+  .data([data])
+  .attr("width", width)
+  .attr("height", height)
+  .attr('class','pie-chart-svg')
+  .append("svg:g")
+  .attr("transform", "translate(" +(radius+xOffset ) + "," + (radius+yOffset) + ")");
   var pie = d3.layout.pie().value(function(d){return d.value;});
 
   // declare an arc generator function

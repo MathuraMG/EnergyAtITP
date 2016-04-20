@@ -73,19 +73,22 @@ function onLoad(){
 
 
   //attach on swipe functions for the pie charts
-  $('.visualisation-pie-peak').on("swiperight", function() {
+  $('.visualisation-pie-peak').on("swipeleft", function() {
     //fade in and out the icons indicating which pie chart is showing
     $('.sun-selection-icon').css('opacity',0.7);
     $('.moon-selection-icon').css('opacity',1);
-    $('.visualisation-pie-peak').css('display','none');
-    $('.visualisation-pie-off-peak').css('display','block');
+    $('.visualisation-pie-peak').fadeOut(100,function(){
+      $('.visualisation-pie-off-peak').fadeIn();
+    });
+
   });
-  $('.visualisation-pie-off-peak').on("swipeleft", function() {
+  $('.visualisation-pie-off-peak').on("swiperight", function() {
     //fade in and out the icons indicating which pie chart is showing
     $('.sun-selection-icon').css('opacity',1);
     $('.moon-selection-icon').css('opacity',0.7);
-    $('.visualisation-pie-peak').css('display','block');
-    $('.visualisation-pie-off-peak').css('display','none');
+    $('.visualisation-pie-off-peak').fadeOut(100,function(){
+      $('.visualisation-pie-peak').fadeIn();
+    });
   });
 
 }
@@ -98,14 +101,14 @@ function makeAjaxCall(urlPath, sectionClass)
   $.ajax({
     url: url,
     success: function(result){
-      console.log(result);
-      data = result;
+      //console.log(result.data);
+
       deleteContent();
-      createContent(result,sectionClass);
+      createContent(result.data,sectionClass, result.isDay, result.range);
 
     }
   });
-  return(data);
+
 }
 
 function changeSection(idName)

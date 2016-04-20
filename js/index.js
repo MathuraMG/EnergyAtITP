@@ -42,6 +42,3 @@ var app = {
     },
 
 };
-
-
-//$("selector").on("swipeleft",function(event){...})
