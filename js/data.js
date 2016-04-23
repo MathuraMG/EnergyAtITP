@@ -59,7 +59,6 @@ function drawGraph(allLineData,sectionClass,isDay, range)
   console.log(allLineData);
 
   var elementSelect = '.' + sectionClass + ' .visualisation';
-  var timeFormat = d3.time.format("%I");
   var vis = d3.select(elementSelect),
       WIDTH = 1000,
       HEIGHT = 120,
@@ -69,23 +68,23 @@ function drawGraph(allLineData,sectionClass,isDay, range)
         bottom: 20,
         left: 40
       },
-      xRange = d3.scale.linear().range([MARGINS.left, WIDTH - MARGINS.right])  .domain([d3.min(allLineData[fullRoomIndex].value,function(d){
-        return d.x; }),
-        d3.max(allLineData[fullRoomIndex].value,function(d){
-        return d.x; })]),
+
+      xRange = d3.time.scale()
+      .domain([new Date(allLineData[fullRoomIndex].value[0].x), d3.time.day.offset(new Date(allLineData[fullRoomIndex].value[allLineData[fullRoomIndex].value.length - 1].x), 0
+    )])
+      .range([MARGINS.left, WIDTH - MARGINS.right])
+
       yRange = d3.scale.linear()
               .range([HEIGHT - MARGINS.top, MARGINS.bottom])
-              .domain([0,d3.max(allLineData[fullRoomIndex].value,function(d){
+              .domain([0,d3.max(allLineData[fullRoomIndex].value,function(d){return d.y/1000; })]),
 
-                                                          return d.y; })]),
       xAxis = d3.svg.axis()
         .scale(xRange)
         .tickSize(0.5)
-        .ticks(24)
-        //.tickFormat(d3.time.format("%d"))
-        //.tickFormat(d3.time.format("%d"))
-        //.tickValues(["3 Feb","4 Feb","5 Feb","6 Feb","7 Feb","8 Feb","9 Feb"]);
-      y1Axis = d3.svg.axis()
+        .ticks(6)
+        .tickFormat(d3.time.format("%e %b %I %p"))
+
+      yAxis = d3.svg.axis()
         .scale(yRange)
         .tickSize(0.5)
         .orient('left')
@@ -97,10 +96,10 @@ function drawGraph(allLineData,sectionClass,isDay, range)
     .style("position", "fixed")
     .call(xAxis);
 
-  vis.append('svg:g')
-    .attr('class', 'axis')
-    .attr('transform', 'translate(' + (MARGINS.left) + ',0)')
-    .call(y1Axis);
+  // vis.append('svg:g')
+  //   .attr('class', 'axis')
+  //   .attr('transform', 'translate(' + (MARGINS.left) + ',0)')
+  //   .call(yAxis);
   var i =1;
   var scale = (1000/1440);
 
@@ -118,10 +117,13 @@ function drawGraph(allLineData,sectionClass,isDay, range)
 
   var lineFunc = d3.svg.line()
     .x(function(d) {
-      return xRange(d.x);
+      console.log('hello -x -- ' + d.x);
+      return xRange(new Date(d.x));
+      // return xRange(d.x);
     })
     .y(function(d) {
-      return yRange(d.y);
+      console.log('hello -y');
+      return yRange((d.y/1000));
     })
     .interpolate('basis');
 
