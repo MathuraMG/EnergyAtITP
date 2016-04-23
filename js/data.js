@@ -8,7 +8,7 @@ function createContent(result,sectionClass, isDay, range)
 {
   var selectClass = '';
   selectClass = '.' + sectionClass + ' .device-content .visHeading';
-  $(selectClass).html('Power (kW)  usage over last 24 hours');
+  $(selectClass).html('Power (kW) usage over last 24 hours');
 
   selectClass = '.' + sectionClass + ' .device-content .peak-usage';
   $(selectClass).html('Usage - peak vs off-peak hours');
