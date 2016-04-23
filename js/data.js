@@ -8,7 +8,7 @@ function createContent(result,sectionClass, isDay, range)
 {
   var selectClass = '';
   selectClass = '.' + sectionClass + ' .device-content .visHeading';
-  $(selectClass).html('Power usage over last 24 hours');
+  $(selectClass).html('Power (kW)  usage over last 24 hours');
 
   selectClass = '.' + sectionClass + ' .device-content .peak-usage';
   $(selectClass).html('Usage - peak vs off-peak hours');
@@ -54,6 +54,13 @@ function pickMaxUsage(result)
 
 function drawGraph(allLineData,sectionClass,isDay, range)
 {
+  //draw the fixed y axis
+  // var canvas = $('.visualisation-y-axis-canvas');
+  // canvas.attr('height','120px');
+  // canvas.attr('width','40px');
+  //
+  // canvas = canvas[0];
+  // var ctx = canvas.getContext("2d")
 
   var fullRoomIndex = allLineData.length - 1;
   console.log(allLineData);
@@ -66,7 +73,7 @@ function drawGraph(allLineData,sectionClass,isDay, range)
         top: 20,
         right: 20,
         bottom: 20,
-        left: 40
+        left: 0
       },
 
       xRange = d3.time.scale()
@@ -84,22 +91,12 @@ function drawGraph(allLineData,sectionClass,isDay, range)
         .ticks(6)
         .tickFormat(d3.time.format("%e %b %I %p"))
 
-      yAxis = d3.svg.axis()
-        .scale(yRange)
-        .tickSize(0.5)
-        .orient('left')
-        .tickSubdivide(true);
-
   vis.append('svg:g')
     .attr('class', 'axis')
     .attr('transform', 'translate(0,' + (HEIGHT - MARGINS.bottom) + ')')
     .style("position", "fixed")
     .call(xAxis);
 
-  // vis.append('svg:g')
-  //   .attr('class', 'axis')
-  //   .attr('transform', 'translate(' + (MARGINS.left) + ',0)')
-  //   .call(yAxis);
   var i =1;
   var scale = (1000/1440);
 
@@ -117,12 +114,10 @@ function drawGraph(allLineData,sectionClass,isDay, range)
 
   var lineFunc = d3.svg.line()
     .x(function(d) {
-      console.log('hello -x -- ' + d.x);
       return xRange(new Date(d.x));
       // return xRange(d.x);
     })
     .y(function(d) {
-      console.log('hello -y');
       return yRange((d.y/1000));
     })
     .interpolate('basis');
@@ -154,6 +149,44 @@ function drawGraph(allLineData,sectionClass,isDay, range)
   	.style('fill', color)
     .attr('class',classNameText)
   	.text(allLineData[fullRoomIndex].name);
+
+
+// /*********************************************************/
+// //EXPERIMENT
+
+    var elementSelect1 = '.' + sectionClass + ' .visualisation-y-axis';
+    var vis1 = d3.select(elementSelect1),
+        WIDTH = 20,
+        HEIGHT = 120,
+        MARGINS = {
+          top: 20,
+          right: 20,
+          bottom: 20,
+          left: 20
+        },
+
+
+        yRange = d3.scale.linear()
+                .range([HEIGHT - MARGINS.top, MARGINS.bottom])
+                .domain([0,d3.max(allLineData[fullRoomIndex].value,function(d){return d.y/1000; })]),
+
+
+        yAxis = d3.svg.axis()
+          .scale(yRange)
+          .tickSize(0.5)
+          .ticks(4)
+          .orient('left')
+          .tickSubdivide(true);
+
+
+    vis1.append("rect").attr("x", 0).attr("y", 0).attr("width",  20).attr("class","vis-y-axis-back");
+
+    vis1.append('svg:g')
+      .attr('class', 'axis')
+      .attr('transform', 'translate(' + (MARGINS.left) + ',0)')
+      .call(yAxis);
+
+// /*********************************************************/
 
 
 }
