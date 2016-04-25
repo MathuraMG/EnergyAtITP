@@ -280,7 +280,7 @@ function getPieChart(data,width,height,radius,id,xOffset,yOffset)
   arcs.append("svg:path")
       .attr("fill", function(d, i){
         // console.log('the color is -- ' + i)
-          return d3.hsl((360-i*10)%40, 0.4,0.65);
+          return d3.hsl((360-i*5)%40, 0.4,0.65);
       })
       .attr("d", function (d) {
           // log the result of the arc generator to show how cool it is :)
@@ -305,7 +305,7 @@ function drawCompareObjects(energyData, sectionClass)
 
   var bulbPower = 14*24; //14W rating for CFL bulb
   var noOfBulbs = totalEnergy/(bulbPower);
-  var selectClass = '.' + sectionClass + ' .compare-inforgraphic.compare-inforgraphic-hairdryer';
+  var selectClass = '.' + sectionClass + ' .compare-inforgraphic.compare-inforgraphic-bulb';
 
   for(var i=0;i<noOfBulbs;i++)
   {
@@ -317,7 +317,26 @@ function drawCompareObjects(energyData, sectionClass)
 
   }
 
-  selectClass = '.' + sectionClass + ' .compare-text';
+  selectClass = '.' + sectionClass + ' .compare-text-bulb';
   $(selectClass).html('The total energy used <span style="font-weight:400"><br>'+ (totalEnergy/1000).toFixed(2)+' kWh </span><br> is equal to turning on <br> <span style="font-weight:400">' + Math.floor(noOfBulbs) + ' CFL bulbs for a whole day</span>');
+
+
+
+  var bigMacPower = 639;
+  var noOfBigMac = totalEnergy/bigMacPower;
+  var selectClass = '.' + sectionClass + ' .compare-inforgraphic.compare-inforgraphic-bigmac';
+
+  for(var i=0;i<noOfBulbs;i++)
+  {
+    var img = document.createElement('img');
+    img.src = 'assets/bigMac.png';
+    img.classList.add('bigmac-image');
+
+    $(selectClass).append(img);
+
+  }
+
+  selectClass = '.' + sectionClass + ' .compare-text-bigmac';
+  $(selectClass).html('The total energy used <span style="font-weight:400"><br>'+ (totalEnergy/1000).toFixed(2)+' kWh </span><br> is equal to the energy in <br> <span style="font-weight:400">' + Math.floor(noOfBigMac) + ' Big Macs!</span>');
 
 }

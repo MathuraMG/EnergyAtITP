@@ -222,7 +222,7 @@ SELECTION ICONS
 ********************************/
 .selection-icons
 {
-  width: 8%;
+  width: 12%;
 }
 .sun-selection-icon
 {
@@ -242,12 +242,34 @@ SELECTION ICONS
 /********************************
 COMPARE CONTAINERS
 ********************************/
+.bulb-selection-icon
+{
+  opacity: 1;
+}
+.bigmac-selection-icon
+{
+  opacity: 0.7;
+}
+.compare-selection-icons
+{
+  width: 80%;
+  margin: 15px auto;
+  text-align: center;
+}
 .compare-container
 {
   width: 80%;
   margin: 0 auto;
 }
-.compare-text
+.compare-text-bigmac
+{
+  display: none;
+  text-align: center;
+  font-weight:100;
+  margin: 5px 0;
+  margin-bottom: 5%;
+}
+.compare-text-bulb
 {
   text-align: center;
   font-weight:100;
@@ -259,6 +281,18 @@ COMPARE CONTAINERS
   width: 7%;
   margin: 1% 1.4%;
   opacity: 0.7;
+}
+
+.bigmac-image
+{
+  width: 9.7%;
+  /*margin: 1% 1.4%;*/
+  opacity: 0.8;
+  height: 30px;
+}
+.compare-inforgraphic-bigmac
+{
+  display: none;
 }
 
 /***************

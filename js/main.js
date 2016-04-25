@@ -82,25 +82,46 @@ function onLoad(){
     //fade in and out the icons indicating which pie chart is showing
     $('.sun-selection-icon').css('opacity',0.7);
     $('.moon-selection-icon').css('opacity',1);
-    $('.visualisation-pie-peak').fadeOut(100,function(){
-      $('.pie-chart-peak-numbers').fadeOut(100,function(){
-        $('.visualisation-pie-off-peak').fadeIn();
-      });
-    });
+    $('.visualisation-pie-peak').fadeOut(100);
+    $('.pie-chart-peak-numbers').fadeOut(100);
+    $('.visualisation-pie-off-peak').fadeIn();
     $('.pie-chart-off-peak-numbers').fadeIn();
   });
   $('.visualisation-pie-off-peak').on("swiperight", function() {
     //fade in and out the icons indicating which pie chart is showing
     $('.sun-selection-icon').css('opacity',1);
     $('.moon-selection-icon').css('opacity',0.7);
-    $('.visualisation-pie-off-peak').fadeOut(100,function(){
-      $('.pie-chart-off-peak-numbers').fadeOut(100,function(){
-        $('.visualisation-pie-peak').fadeIn();
-      });
-    });
+    $('.visualisation-pie-off-peak').fadeOut(100);
+    $('.pie-chart-off-peak-numbers').fadeOut(100);
+        // $('.visualisation-pie-peak').fadeIn();
     $('.pie-chart-peak-numbers').fadeIn();
+    $('.visualisation-pie-peak').fadeIn();
   });
 
+//attach swipe functionality for the compare numbers
+// compare-container
+  $('.compare-inforgraphic-bulb').on("swipeleft", function() {
+    //fade in and out the icons indicating which pie chart is showing
+    $('.bulb-selection-icon').css('opacity',0.7);
+    $('.bigmac-selection-icon').css('opacity',1);
+    $('.compare-inforgraphic-bulb').fadeOut(100,function(){
+      $('.compare-text-bulb').fadeOut(100,function(){
+        $('.compare-inforgraphic-bigmac').fadeIn();
+      });
+    });
+    $('.compare-text-bigmac').fadeIn();
+  });
+  $('.compare-inforgraphic-bigmac').on("swiperight", function() {
+    //fade in and out the icons indicating which pie chart is showing
+    $('.bulb-selection-icon').css('opacity',1);
+    $('.bigmac-selection-icon').css('opacity',0.7);
+    $('.compare-inforgraphic-bigmac').fadeOut(100,function(){
+      $('.compare-text-bigmac').fadeOut(100,function(){
+        $('.compare-inforgraphic-bulb').fadeIn();
+      });
+    });
+    $('.compare-text-bulb').fadeIn();
+  });
 }
 
 function makeAjaxCall(urlPath, sectionClass)
