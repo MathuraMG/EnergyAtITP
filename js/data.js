@@ -2,6 +2,7 @@ function deleteContent()
 {
   $('.visualisation-pie').empty();
   $('.visualisation').empty();
+  $('.compare-inforgraphic').empty();
 }
 
 function createContent(result,sectionClass, isDay, range)
@@ -19,30 +20,37 @@ function createContent(result,sectionClass, isDay, range)
   $(selectClass).html('Equipment consuming maximum energy');
 
   selectClass = '.' + sectionClass + ' .device-content .equipment-max-usage-name';
-  $(selectClass).html(equipName);
+  $(selectClass).html(equipName + ' - ' + (equipDetails.value/1000).toFixed(2) + ' kWh');
 
   drawGraph(result,sectionClass,isDay, range);
   drawPieCharts(result,sectionClass);
+  drawCompareObjects(result,sectionClass);
 
 }
 
 function pickMaxUsage(result)
 {
-  console.log('test test test');
-  console.log(result);
-  var maxEquipmentName = result[0].name;
-  var maxEquipmentValue = result[0].totalEnergyPeak + result[0].totalEnergyOffPeak;
+ var startCountFrom = 1;
+  if(result[0].name.localeCompare("roomTotal") == 0){
+    startCountFrom++;
+  }
+
+  var maxEquipmentName = result[startCountFrom-1].name;
+  var maxEquipmentValue = result[startCountFrom-1].totalEnergyPeak + result[startCountFrom-1].totalEnergyOffPeak;
   var totalRoomValue = maxEquipmentValue;
 
   //get the name of the equipoment which used maximum energy
-  for(var i =1;i<result.length;i++){
-    var totalValue = result[i].totalEnergyPeak + result[i].totalEnergyOffPeak;
-    if(totalValue > maxEquipmentValue)
-    {
-      maxEquipmentValue = totalValue;
-      maxEquipmentName = result[i].name;
+  for(var i =startCountFrom;i<result.length;i++){
+    if(result[i].name.localeCompare("roomTotal") != 0){
+      var totalValue = result[i].totalEnergyPeak + result[i].totalEnergyOffPeak;
+      if(totalValue > maxEquipmentValue)
+      {
+        maxEquipmentValue = totalValue;
+        maxEquipmentName = result[i].name;
+      }
+      totalRoomValue += totalValue;
     }
-    totalRoomValue += totalValue;
+
   }
   var percentage = (100*maxEquipmentValue)/totalRoomValue;
   return {
@@ -63,7 +71,7 @@ function drawGraph(allLineData,sectionClass,isDay, range)
   // var ctx = canvas.getContext("2d")
 
   var fullRoomIndex = allLineData.length - 1;
-  console.log(allLineData);
+  // console.log(allLineData);
 
   var elementSelect = '.' + sectionClass + ' .visualisation';
   var vis = d3.select(elementSelect),
@@ -125,8 +133,8 @@ function drawGraph(allLineData,sectionClass,isDay, range)
 
     var allIndexDiv = document.getElementsByClassName('allIndexButtons')[0];
 
-    console.log(allLineData[fullRoomIndex]);
-    console.log('drawing graph for -- ' + allLineData[fullRoomIndex].name );
+    // console.log(allLineData[fullRoomIndex]);
+    // console.log('drawing graph for -- ' + allLineData[fullRoomIndex].name );
     var className = 'class-'+allLineData[fullRoomIndex].name;
     className = className.replace(/\s+/g, '');
     var color = d3.hsl(20, 0.4,0.65);
@@ -151,8 +159,8 @@ function drawGraph(allLineData,sectionClass,isDay, range)
   	.text(allLineData[fullRoomIndex].name);
 
 
-// /*********************************************************/
-// //EXPERIMENT
+    // /*********************************************************/
+    // //EXPERIMENT
 
     var elementSelect1 = '.' + sectionClass + ' .visualisation-y-axis';
     var vis1 = d3.select(elementSelect1),
@@ -186,7 +194,7 @@ function drawGraph(allLineData,sectionClass,isDay, range)
       .attr('transform', 'translate(' + (MARGINS.left) + ',0)')
       .call(yAxis);
 
-// /*********************************************************/
+      // /*********************************************************/
 
 
 }
@@ -204,16 +212,22 @@ function drawPieCharts(energyData,sectionClass)
   var radius = 0.3*screen.width;;
 
 
+  var elementSelect1 = '.' + sectionClass + ' .pie-chart-off-peak-numbers';
+  $(elementSelect1).html((energyData[energyData.length-1].totalEnergyOffPeak/1000).toFixed(2) + 'kWh');
+
+  elementSelect1 = '.' + sectionClass + ' .pie-chart-peak-numbers';
+  $(elementSelect1).html((energyData[energyData.length-1].totalEnergyPeak/1000).toFixed(2) + 'kWh');
+
   /****************************************************************
   FOR PEAK ENERGY
   ****************************************************************/
   for(var i =0;i<energyData.length;i++)
   {
     if(energyData[i].name.localeCompare("x") == 0){
-      console.log('garbegeish');
+      // console.log('garbegeish');
     }
     else if(energyData[i].name.localeCompare("roomTotal") == 0){
-      console.log('garbegeish');
+      // console.log('garbegeish');
     }
     else
     {
@@ -234,16 +248,18 @@ function drawPieCharts(energyData,sectionClass)
 
   // $(elementSelect).html( Math.round(totalEnergyPeakDataWatt/4000,2) + 'kWh');
 
-  console.log('going to get pie chart');
+  // console.log('going to get pie chart');
   getPieChart(totalEnergyPeakData, width, height,radius,elementSelect,0,0);
 
   var elementSelect = '.' + sectionClass + ' .visualisation-pie.visualisation-pie-off-peak';
 
-  console.log('going to get pie chart');
+  // console.log('going to get pie chart');
   getPieChart(totalEnergyOffPeakData, width*ratio, height*ratio,radius*ratio,elementSelect,0,0);
 
   // getPieChart(totalEnergyOffPeakData, width, height,radius*ratio,'#chartOffPeakData',width/2,height/2);
+
 }
+
 
 function getPieChart(data,width,height,radius,id,xOffset,yOffset)
 {
@@ -263,12 +279,12 @@ function getPieChart(data,width,height,radius,id,xOffset,yOffset)
   var arcs = vis.selectAll("g.slice").data(pie).enter().append("svg:g").attr("class", "slice");
   arcs.append("svg:path")
       .attr("fill", function(d, i){
-        console.log('the color is -- ' + i)
+        // console.log('the color is -- ' + i)
           return d3.hsl((360-i*10)%40, 0.4,0.65);
       })
       .attr("d", function (d) {
           // log the result of the arc generator to show how cool it is :)
-          //console.log(arc(d));
+          // console.log(arc(d));
           return arc(d);
       });
 
@@ -282,15 +298,26 @@ function getPieChart(data,width,height,radius,id,xOffset,yOffset)
 
 }
 
-function drawLightBulbs(noOfBulbs)
+function drawCompareObjects(energyData, sectionClass)
 {
+  var dataIndex = energyData.length - 1;
+  var totalEnergy = energyData[dataIndex].totalEnergyOffPeak + energyData[dataIndex].totalEnergyPeak;
+
+  var bulbPower = 14*24; //14W rating for CFL bulb
+  var noOfBulbs = totalEnergy/(bulbPower);
+  var selectClass = '.' + sectionClass + ' .compare-inforgraphic.compare-inforgraphic-hairdryer';
+
   for(var i=0;i<noOfBulbs;i++)
   {
     var img = document.createElement('img');
-    img.src = '/assets/CFL.png';
-    img.classList.add('bulbImage');
+    img.src = 'assets/CFL.png';
+    img.classList.add('bulb-image');
 
-    var block = document.getElementsByClassName('numberOfBulbsInfograph')[0];
-    block.appendChild(img);
+    $(selectClass).append(img);
+
   }
+
+  selectClass = '.' + sectionClass + ' .compare-text';
+  $(selectClass).html('The total energy used <span style="font-weight:400"><br>'+ (totalEnergy/1000).toFixed(2)+' kWh </span><br> is equal to turning on <br> <span style="font-weight:400">' + Math.floor(noOfBulbs) + ' CFL bulbs for a whole day</span>');
+
 }

@@ -1,11 +1,16 @@
-var currentSection = 'main-page-section';
+var currentSection = 'cover-page-section';
 // $( document ).ready(function(){
 //   onLoad();
 // });
 
 function onLoad(){
+
+  setTimeout(function(){
+    sectionClass = 'main-page-section';
+    changeSection(sectionClass);
+   }, 2000);
   //LOGIN to the enertiv API on load of the page
-  makeAjaxCall('login');
+  makeAjaxCall('login?loginId=horsetrunk12');
 
   //*****************************************
   // ROOMS THAT ARE PRESENT BELOW
@@ -78,17 +83,22 @@ function onLoad(){
     $('.sun-selection-icon').css('opacity',0.7);
     $('.moon-selection-icon').css('opacity',1);
     $('.visualisation-pie-peak').fadeOut(100,function(){
-      $('.visualisation-pie-off-peak').fadeIn();
+      $('.pie-chart-peak-numbers').fadeOut(100,function(){
+        $('.visualisation-pie-off-peak').fadeIn();
+      });
     });
-
+    $('.pie-chart-off-peak-numbers').fadeIn();
   });
   $('.visualisation-pie-off-peak').on("swiperight", function() {
     //fade in and out the icons indicating which pie chart is showing
     $('.sun-selection-icon').css('opacity',1);
     $('.moon-selection-icon').css('opacity',0.7);
     $('.visualisation-pie-off-peak').fadeOut(100,function(){
-      $('.visualisation-pie-peak').fadeIn();
+      $('.pie-chart-off-peak-numbers').fadeOut(100,function(){
+        $('.visualisation-pie-peak').fadeIn();
+      });
     });
+    $('.pie-chart-peak-numbers').fadeIn();
   });
 
 }

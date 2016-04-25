@@ -4,6 +4,7 @@ html
   width: 100%;
   margin: 0 0;
   padding: 0 0;
+  background: #ffffff;
 }
 
 body
@@ -21,8 +22,9 @@ body
 }
 .mainHeading
 {
+  font-family:Quicksand;
   font-size : 2em;
-  font-weight: 100;
+  font-weight: 400;
   text-align: center;
 }
 /* room styling */
@@ -35,50 +37,50 @@ body
 {
   display: block;
   /*border: 4px solid #dddddd;*/
-  border-radius: 30px;
-  margin: 4% auto;
+  /*border-radius: 30px;*/
+  margin: 1% auto;
   /*background-color: #ffffff;*/
-  width: 80%;
+  width: 100%;
   background-size: cover;
-  /*box-shadow: 2px 2px 20px #888888;*/
-  opacity:0.8;
+
+  opacity:0.9;
   height:120px;
 }
-.japanese-room
+
+.class-room
 {
-  /*height: 500px;*/
-  background-image: url('../assets/japanese.jpg');
+  /*height: 100px;*/
+  /*background: #C98282;*/
+  background-image: url('../assets/classroom.jpeg');
+
 
 }
 .shop-room
 {
   /*height: 200px;*/
+  /*background: #C98E82;*/
   background-image: url('../assets/shop.jpeg');
 
 }
 .kitchen-room
 {
   /*height: 100px;*/
+  /*background: #C99A82;*/
   background-image: url('../assets/kitchen.jpeg');
-
-}
-.class-room
-{
-  /*height: 100px;*/
-  background-image: url('../assets/classroom.jpeg');
 
 }
 .phys-comp-room
 {
   /*height: 400px;*/
+  /*background: #C9A682;*/
   background-image: url('../assets/pcomp.jpeg');
 }
 /*Name in the room*/
 .room-name
 {
   display: inline-block;
-  font-size : 1.5em;
-  font-weight: 400;
+  font-size : 1.2em;
+  font-weight: 800;
   color: #ffffff;
   text-align: center;
   width: 100%;
@@ -86,15 +88,47 @@ body
   line-height:120px;
 }
 
+
+/************
+COVER PAGE
+*************/
+
+.cover-page {
+  font-family: Quicksand;
+  display: block;
+  background: #fff3e6;
+  font-weight: 100;
+  margin: 0 auto;
+  margin-top: 40%;
+  font-size: 2em;
+  text-align: center;
+}
+.cover-page-icon {
+  display: block;
+  margin: 5% auto;
+}
+
 /*Display only one section at a time*/
 section {
   display: none;
 }
 
-#main-page-section {
+#cover-page-section {
   display: block;
+  position: fixed;
+  height: 100%;
+  width: 100%;
 }
 
 h1 {
   display: none;
+}
+
+.overall-section-div {
+  display:block;
+  height:100%;
+  background: #fff3e6;
+}
+.kitchen-room-section {
+  background: #fff3e6;
 }

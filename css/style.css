@@ -23,3 +23,13 @@ hr
 {
   box-shadow: 1px 1px 10px #888888;
 }
+section
+{
+  background: #fff3e6;
+  
+}
+div
+{
+  color: black;
+  text-shadow: none;
+}
